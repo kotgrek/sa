@@ -1,0 +1,25 @@
+---
+#Installing vsftpd
+- name: simple playbook
+  hosts: 192.168.1.1
+  user: solo
+  become: yes
+  become_method: sudo
+  become_user: root
+  tasks:
+  - name: install vsftpd
+    yum: name=vsftpd
+  - name: enable vsftpd  
+    service: name=vsftpd enabled=true
+  - name: create readme file
+    copy:
+      content: "Welcome to my ftp server"
+      dest: /var/ftp/pub/readme
+      force: no
+      mode: 0444
+  - name: Open port ftp
+    firewalld:
+      rich_rule: 'rule service name="ftp" audit limit value="1/m" accept'
+      permanent: yes
+      state: enabled
+... 
