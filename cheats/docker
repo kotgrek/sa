@@ -1,0 +1,41 @@
+DOCKER
+
+Установка скриптом
+
+wget -aO- https://get.docker.com/ |sh
+
+
+Highlights
+docker run - to run a new container
+
+docker ps - to see running and stopped containers
+
+docker images - to see info about images
+
+#Выключить все работающие контейнеры
+docker stop $(docker ps -aq)
+
+#Удалить все контейнеры
+docker rm $(docker ps -aq)
+
+#Удалить все образы
+docker rmi $(docker images -q)
+
+docker run - Starts a new container
+
+docker pull - Copies images to the Docker Host
+docker images - Lists images on the Docker Host
+docker rmi - Removes images from the Docker Host
+
+docker ps - Lists running containers
+docker stop - Stops running containers
+docker rm - Removes (deletes) stopped containers
+
+
+#Создаем свой образ
+apt update
+apt install cowsay
+ln -s /usr/games/cowsay /usr/bin/cowsay cowsay “TEST”
+docker commit myapp dockerid/myappimage
+docker run dockerid/myappimage cowsay “TEST”
+docker push dockerid/myappimage

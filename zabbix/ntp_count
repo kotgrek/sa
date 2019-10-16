@@ -1,0 +1,5 @@
+# /etc/zabbix/zabbix_agentd.conf
+
+Include=/etc/zabbix/zabbix_agentd.d/
+UserParameter=chronyc.ntppackdrop,sudo chronyc serverstats | grep 'NTP packets dropped' | awk '{print $5}'
+UserParameter=chronyc.ntppackdelta,file='/tmp/received.packets';filter='NTP packets received'; [ ! -f file ] && { sudo /usr/b

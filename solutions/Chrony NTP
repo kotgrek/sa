@@ -1,0 +1,48 @@
+# Chrony NTP
+
+
+sudo apt update && apt upgrade
+
+apt install chrony
+systemctl start chronyd && systemctl enable chronyd
+
+cp /etc/chrony/chrony.conf /etc/chrony/chrony.conf.ORIG
+
+vim /etc/chrony/chrony.conf
+
+# chrony.conf
+server ntp1.vniiftri.ru
+server ntp2.vniiftri.ru
+server ntp3.vniiftri.ru
+server ntp4.vniiftri.ru
+server ntp21.vniiftri.ru
+server ntp1.niiftri.irkutsk.ru
+server ntp2.niiftri.irkutsk.ru
+server vniiftri.khv.ru
+server vniiftri2.khv.ru
+
+keyfile /etc/chrony/chrony.keys
+commandkey 1
+driftfile /var/lib/chrony/chrony.drift
+logdir /var/log/chrony
+maxupdateskew 100.0
+dumponexit
+dumpdir /var/lib/chrony
+local stratum 3
+allow
+logchange 0.5
+hwclockfile /etc/adjtime
+rtcsync
+###
+
+
+
+systemctl restart chronyd
+firewall-cmd --permanent --add-service=ntp
+
+timedatectl
+…
+NTP enabled: yes
+NTP synchronized: yes
+
+chronyc sources

@@ -1,0 +1,18 @@
+Официального GUI для Docker не существует. Однако можно найти несколько интересных проектов, решающих эту проблему. Первый — это DockerUI, очень простой веб-интерфейс, распространяемый в виде Docker-образа. Для установки и запуска выполняем такую команду:
+
+$ sudo docker run -d -p 9000:9000 --privileged \
+    -v /var/run/docker.sock:/var/run/docker.sock dockerui/dockerui
+
+Сам интерфейс будет доступен по адресу http://IP-dockerd:9000. В случае необходимости подключиться к другому хосту с запущенным dockerd просто указываем его адрес:порт с помощью опции -e:
+
+$ sudo docker run -d -p 9000:9000 --privileged \
+    dockerui/dockerui -e http://127.0.0.1:2375
+
+Другой вариант — это Shipyard, включающий в себя такие функции, как аутентификация, поддержка кластеров и CLI. Основное назначение интерфейса — управление кластерами из множества Docker-хостов. Как и в предыдущем случае, установка очень проста:
+
+$ sudo docker run -it -p 8080:8080 -d --name shipyard \
+    --link shipyard-rethinkdb:rethinkdb shipyard/shipyard
+
+Веб-интерфейс будет доступен на порту 8080, юзер admin, пароль shipyard.
+
+docker run -d -p 9000:9000 --name=portainer \ -v "/var/run/docker.sock:/var/run/docker.sock" \ -v /host/data:/data \ portainer/portainer
